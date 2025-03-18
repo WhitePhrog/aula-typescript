@@ -1,91 +1,108 @@
-// 1. Exercício de Interfaces
-interface Produto {
-    id: number;
-    nome: string;
-    preco: number;
-    categoria?: string;
+// Exercícios TypeScript - Conceitos Avançados
+
+// 1. Interfaces e Tipagem Avançada
+
+// Exercício 1
+interface Carro {
+    marca: string;
+    modelo: string;
+    ano: number;
+    motor?: string; // Propriedade opcional
 }
 
-const produto: Produto = {
-    id: 1,
-    nome: "Notebook",
-    preco: 3000.00,
-    categoria: "Eletrônicos"
+const meuCarro: Carro = {
+    marca: "Toyota",
+    modelo: "Corolla",
+    ano: 2022,
+    motor: "2.0 Flex",
+    detalhes: function (): string {
+        throw new Error("Function not implemented.");
+    }
 };
 
-console.log(produto);
+console.log(meuCarro);
 
-
-// 2. Exercício com Generics
-function multiplicar<T>(valor1: T, valor2: T): T {
-    if (typeof valor1 === 'string' && typeof valor2 === 'string') {
-        return (parseFloat(valor1) * parseFloat(valor2)) as T;
-    }
-    return (valor1 as number) * (valor2 as number) as T;
+// Exercício 2
+interface Multiplicacao {
+    (a: number, b: number): number;
 }
 
-console.log(multiplicar(5, 10));
-console.log(multiplicar("5", "10"));
+const multiplicar: Multiplicacao = (a, b) => a * b;
+
+console.log(multiplicar(5, 3));
+console.log(multiplicar(7, 2));
 
 
-// 3. Exercício de Union Types
-function formatarEntrada(input: string | number): string {
-    if (typeof input === 'number') {
-        return `O valor é: ${input.toFixed(2)}`;
+// 2. Generics
+
+// Exercício 3
+function inverterArray<T>(array: T[]): T[] {
+    return array.reverse();
+}
+
+console.log(inverterArray([1, 2, 3, 4, 5]));
+console.log(inverterArray(["a", "b", "c", "d"]));
+
+// Exercício 4
+interface Repositorio<T> {
+    salvar(dado: T): void;
+    obterTodos(): T[];
+}
+
+class UsuarioRepositorio implements Repositorio<{ nome: string; email: string }> {
+    private usuarios: { nome: string; email: string }[] = [];
+
+    salvar(dado: { nome: string; email: string }): void {
+        this.usuarios.push(dado);
+    }
+
+    obterTodos(): { nome: string; email: string }[] {
+        return this.usuarios;
+    }
+}
+
+const repo = new UsuarioRepositorio();
+repo.salvar({ nome: "Alice", email: "alice@example.com" });
+repo.salvar({ nome: "Bob", email: "bob@example.com" });
+
+console.log(repo.obterTodos());
+
+
+// 3. Manipulação Avançada de Tipos
+
+// Exercício 5
+type RespostaServidor = string | boolean;
+
+function processarResposta(resposta: RespostaServidor): void {
+    if (typeof resposta === "string") {
+        console.log(`Mensagem do servidor: ${resposta}`);
     } else {
-        return `O texto é: ${input.toUpperCase()}`;
+        console.log(resposta ? "Operação bem-sucedida!" : "Falha na operação.");
     }
 }
 
-console.log(formatarEntrada(123.456));
-console.log(formatarEntrada("olá mundo"));
+processarResposta("Dados recebidos com sucesso");
+processarResposta(true);
+processarResposta(false);
 
-
-// 4. Exercício com Intersection Types
-type Endereco = {
-    rua: string;
-    cidade: string;
-    estado: string;
-};
-
-type Usuario = {
+// Exercício 6
+type Estudante = {
     nome: string;
-    idade: number;
+    curso: string;
 };
 
-type UsuarioCompleto = Usuario & Endereco;
+type Trabalhador = {
+    empresa: string;
+    cargo: string;
+};
 
-const usuarioCompleto: UsuarioCompleto = {
+type EstudanteTrabalhador = Estudante & Trabalhador;
+
+const estudanteTrabalhador: EstudanteTrabalhador = {
     nome: "Carlos",
-    idade: 30,
-    rua: "Rua Principal",
-    cidade: "São Paulo",
-    estado: "SP"
+    curso: "Engenharia de Software",
+    empresa: "Tech Solutions",
+    cargo: "Desenvolvedor Júnior"
 };
 
-console.log(usuarioCompleto);
-
-
-// 5. Exercício com Utility Types
-interface Pessoa {
-    nome: string;
-    idade: number;
-    email?: string;
-}
-
-const pessoaParcial: Partial<Pessoa> = {
-    nome: "Maria"
-};
-
-console.log(pessoaParcial);
-
-
-// 6. Exercício de Type Aliases
-type ID = string | number;
-
-function buscarUsuario(id: ID) {
-    console.log(`Buscando usuário com ID: ${id}`);
-}
-
-buscarUsuario(123);
-buscarUsuario("abc123");
+console.log(estudanteTrabalhador);
