@@ -26,16 +26,26 @@ npm install
 npm run android
 ```  
 
-## Application Screens  
+## Application Screen Examples
+### Login Screen
+![image](https://github.com/user-attachments/assets/0ef75780-38d4-469e-bb8a-d1aad309f574)
 
-Add images of the app screens here. Example:  
+### Register Screen
+![image](https://github.com/user-attachments/assets/92d453a8-a9ef-4210-8455-a1363673464d)
 
-- Login Screen  
-- Registration Screen  
-- Dashboard Screen  
-- Profile Screen  
-- Appointment Creation Screen  
-- User Management Screen  
+### Admin Dashboard
+![image](https://github.com/user-attachments/assets/d3808cdc-c06a-47ea-9ae0-61d9a3fedf42)
+
+### Doctor Dashboard
+![image](https://github.com/user-attachments/assets/f233fb03-5580-49d4-9a6b-0e2d6d713f99)
+
+### Patient Dashboard
+![image](https://github.com/user-attachments/assets/2ce1d2a9-be26-4493-9ce3-b777bf605bb5)
+
+### Patient Scheduling
+![image](https://github.com/user-attachments/assets/968ec615-d45a-483a-a1eb-97446035f402)
+
+
 
 ## UX/UI Decisions  
 
