@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
 import theme from '../styles/theme';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, TextStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -43,6 +43,7 @@ const LoginScreen: React.FC = () => {
         autoCapitalize="none"
         keyboardType="email-address"
         containerStyle={styles.input}
+        inputStyle={styles.inputText}
       />
 
       <Input
@@ -51,6 +52,7 @@ const LoginScreen: React.FC = () => {
         onChangeText={setPassword}
         secureTextEntry
         containerStyle={styles.input}
+        inputStyle={styles.inputText}
       />
 
       {error ? <ErrorText>{error}</ErrorText> : null}
@@ -61,6 +63,7 @@ const LoginScreen: React.FC = () => {
         loading={loading}
         containerStyle={styles.button as ViewStyle}
         buttonStyle={styles.buttonStyle}
+        titleStyle={styles.buttonText as TextStyle}
       />
 
       <Button
@@ -68,12 +71,13 @@ const LoginScreen: React.FC = () => {
         onPress={() => navigation.navigate('Register')}
         containerStyle={styles.registerButton as ViewStyle}
         buttonStyle={styles.registerButtonStyle}
+        titleStyle={styles.buttonText as TextStyle}
       />
 
-      <Text style={styles.hint}>
+      <Text style={[styles.hint, styles.bodyText]}>
         Use as credenciais de exemplo:
       </Text>
-      <Text style={styles.credentials}>
+      <Text style={[styles.credentials, styles.captionText]}>
         Admin: admin@example.com / 123456{'\n'}
         Médicos: joao@example.com, maria@example.com, pedro@example.com / 123456
       </Text>
@@ -85,6 +89,12 @@ const styles = {
   input: {
     marginBottom: 15,
   },
+  inputText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+    color: theme.colors.text,
+  },
   button: {
     marginTop: 10,
     width: '100%',
@@ -92,6 +102,11 @@ const styles = {
   buttonStyle: {
     backgroundColor: theme.colors.primary,
     paddingVertical: 12,
+  },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
   },
   registerButton: {
     marginTop: 10,
@@ -110,7 +125,16 @@ const styles = {
     marginTop: 10,
     textAlign: 'center' as const,
     color: theme.colors.text,
-    fontSize: 12,
+  },
+  bodyText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+  },
+  captionText: {
+    fontFamily: theme.typography.caption.fontFamily,
+    fontSize: theme.typography.caption.fontSize,
+    fontWeight: theme.typography.caption.fontWeight as TextStyle['fontWeight'],
   },
 };
 
@@ -122,17 +146,21 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   text-align: center;
   margin-bottom: 30px;
   color: ${theme.colors.text};
 `;
 
 const ErrorText = styled.Text`
+  font-family: ${theme.typography.caption.fontFamily};
+  font-size: ${theme.typography.caption.fontSize}px;
+  font-weight: ${theme.typography.caption.fontWeight};
   color: ${theme.colors.error};
   text-align: center;
   margin-bottom: 10px;
 `;
 
-export default LoginScreen; 
+export default LoginScreen;

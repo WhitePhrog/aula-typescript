@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, TextStyle } from 'react-native';
-import { Button, ListItem, Text } from 'react-native-elements';
+import { Button, ListItem } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -37,7 +37,6 @@ const UserManagementScreen: React.FC = () => {
       const storedUsers = await AsyncStorage.getItem('@MedicalApp:users');
       if (storedUsers) {
         const allUsers: User[] = JSON.parse(storedUsers);
-        // Filtra o usuário atual da lista
         const filteredUsers = allUsers.filter(u => u.id !== user?.id);
         setUsers(filteredUsers);
       }
@@ -55,14 +54,13 @@ const UserManagementScreen: React.FC = () => {
         const allUsers: User[] = JSON.parse(storedUsers);
         const updatedUsers = allUsers.filter(u => u.id !== userId);
         await AsyncStorage.setItem('@MedicalApp:users', JSON.stringify(updatedUsers));
-        loadUsers(); // Recarrega a lista
+        loadUsers();
       }
     } catch (error) {
       console.error('Erro ao deletar usuário:', error);
     }
   };
 
-  // Carrega os usuários quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
       loadUsers();
@@ -93,6 +91,7 @@ const UserManagementScreen: React.FC = () => {
           onPress={() => {}}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         {loading ? (
@@ -120,12 +119,14 @@ const UserManagementScreen: React.FC = () => {
                     onPress={() => {}}
                     containerStyle={styles.actionButton as ViewStyle}
                     buttonStyle={styles.editButton}
+                    titleStyle={styles.buttonText as TextStyle}
                   />
                   <Button
                     title="Excluir"
                     onPress={() => handleDeleteUser(user.id)}
                     containerStyle={styles.actionButton as ViewStyle}
                     buttonStyle={styles.deleteButton}
+                    titleStyle={styles.buttonText as TextStyle}
                   />
                 </ButtonContainer>
               </ListItem.Content>
@@ -138,6 +139,7 @@ const UserManagementScreen: React.FC = () => {
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.backButton}
+          titleStyle={styles.buttonText as TextStyle}
         />
       </ScrollView>
     </Container>
@@ -173,14 +175,22 @@ const styles = {
     paddingVertical: 8,
   },
   userName: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontFamily: theme.typography.subtitle.fontFamily,
+    fontSize: theme.typography.subtitle.fontSize,
+    fontWeight: theme.typography.subtitle.fontWeight as TextStyle['fontWeight'],
     color: theme.colors.text,
   },
   userEmail: {
-    fontSize: 14,
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
     color: theme.colors.text,
     marginTop: 4,
+  },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
   },
 };
 
@@ -190,8 +200,9 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
@@ -207,16 +218,20 @@ const UserCard = styled(ListItem)`
 `;
 
 const LoadingText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
 const EmptyText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
@@ -238,6 +253,9 @@ const RoleBadge = styled.View<StyledProps>`
 `;
 
 const RoleText = styled.Text<StyledProps>`
+  font-family: ${theme.typography.caption.fontFamily};
+  font-size: ${theme.typography.caption.fontSize}px;
+  font-weight: ${theme.typography.caption.fontWeight};
   color: ${(props: StyledProps) => {
     switch (props.role) {
       case 'admin':
@@ -248,8 +266,6 @@ const RoleText = styled.Text<StyledProps>`
         return theme.colors.secondary;
     }
   }};
-  font-size: 12px;
-  font-weight: 500;
 `;
 
 const ButtonContainer = styled.View`
@@ -258,4 +274,4 @@ const ButtonContainer = styled.View`
   margin-top: 8px;
 `;
 
-export default UserManagementScreen; 
+export default UserManagementScreen;

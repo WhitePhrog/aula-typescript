@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
 import theme from '../styles/theme';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, TextStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -37,7 +37,6 @@ const RegisterScreen: React.FC = () => {
         password,
       });
 
-      // Após o registro bem-sucedido, navega para o login
       navigation.navigate('Login');
     } catch (err) {
       setError('Erro ao criar conta. Tente novamente.');
@@ -56,6 +55,7 @@ const RegisterScreen: React.FC = () => {
         onChangeText={setName}
         autoCapitalize="words"
         containerStyle={styles.input}
+        inputStyle={styles.inputText}
       />
 
       <Input
@@ -65,6 +65,7 @@ const RegisterScreen: React.FC = () => {
         autoCapitalize="none"
         keyboardType="email-address"
         containerStyle={styles.input}
+        inputStyle={styles.inputText}
       />
 
       <Input
@@ -73,6 +74,7 @@ const RegisterScreen: React.FC = () => {
         onChangeText={setPassword}
         secureTextEntry
         containerStyle={styles.input}
+        inputStyle={styles.inputText}
       />
 
       {error ? <ErrorText>{error}</ErrorText> : null}
@@ -83,6 +85,7 @@ const RegisterScreen: React.FC = () => {
         loading={loading}
         containerStyle={styles.button as ViewStyle}
         buttonStyle={styles.buttonStyle}
+        titleStyle={styles.buttonText as TextStyle}
       />
 
       <Button
@@ -90,6 +93,7 @@ const RegisterScreen: React.FC = () => {
         onPress={() => navigation.navigate('Login')}
         containerStyle={styles.backButton as ViewStyle}
         buttonStyle={styles.backButtonStyle}
+        titleStyle={styles.buttonText as TextStyle}
       />
     </Container>
   );
@@ -98,6 +102,12 @@ const RegisterScreen: React.FC = () => {
 const styles = {
   input: {
     marginBottom: 15,
+  },
+  inputText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+    color: theme.colors.text,
   },
   button: {
     marginTop: 10,
@@ -115,6 +125,11 @@ const styles = {
     backgroundColor: theme.colors.secondary,
     paddingVertical: 12,
   },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+  },
 };
 
 const Container = styled.View`
@@ -125,17 +140,21 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   text-align: center;
   margin-bottom: 30px;
   color: ${theme.colors.text};
 `;
 
 const ErrorText = styled.Text`
+  font-family: ${theme.typography.caption.fontFamily};
+  font-size: ${theme.typography.caption.fontSize}px;
+  font-weight: ${theme.typography.caption.fontWeight};
   color: ${theme.colors.error};
   text-align: center;
   margin-bottom: 10px;
 `;
 
-export default RegisterScreen; 
+export default RegisterScreen;

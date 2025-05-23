@@ -1,29 +1,33 @@
 export default {
    colors: {
-      primary: '#4A90E2',
-      secondary: '#6C757D',
-      background: '#F8F9FA',
-      text: '#212529',
-      error: '#DC3545',
-      success: '#28A745',
-      warning: '#FFC107',
-      white: '#FFFFFF',
-      border: '#DEE2E6',
+       primary: '#FFB3AB',
+       secondary: '#FF9E8F',
+       success: '#A8E6CF',
+       error: '#FF8E9E',
+       warning: '#FFF1B8',
+       background: '#FFE8C2',
+       text: '#6B4C3B',
+       border: '#E8A798',
+       white: '#FFF9F4',
    },
    typography: {
       title: {
+         fontFamily: 'Poppins-Regular',
          fontSize: 24,
          fontWeight: 'bold',
       },
       subtitle: {
+         fontFamily: 'Poppins-Regular',
          fontSize: 18,
          fontWeight: '600',
       },
       body: {
+         fontFamily: 'Poppins-Regular',
          fontSize: 16,
          fontWeight: 'normal',
       },
       caption: {
+         fontFamily: 'Poppins-Regular',
          fontSize: 14,
          fontWeight: 'normal',
       },

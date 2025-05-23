@@ -88,14 +88,13 @@ const DoctorDashboardScreen: React.FC = () => {
           return appointment;
         });
         await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(updatedAppointments));
-        loadAppointments(); // Recarrega a lista
+        loadAppointments();
       }
     } catch (error) {
       console.error('Erro ao atualizar status:', error);
     }
   };
 
-  // Carrega as consultas quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
       loadAppointments();
@@ -113,6 +112,7 @@ const DoctorDashboardScreen: React.FC = () => {
           onPress={() => navigation.navigate('Profile')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         {loading ? (
@@ -144,12 +144,14 @@ const DoctorDashboardScreen: React.FC = () => {
                       onPress={() => handleUpdateStatus(appointment.id, 'confirmed')}
                       containerStyle={styles.actionButton as ViewStyle}
                       buttonStyle={styles.confirmButton}
+                      titleStyle={styles.buttonText as TextStyle}
                     />
                     <Button
                       title="Cancelar"
                       onPress={() => handleUpdateStatus(appointment.id, 'cancelled')}
                       containerStyle={styles.actionButton as ViewStyle}
                       buttonStyle={styles.cancelButton}
+                      titleStyle={styles.buttonText as TextStyle}
                     />
                   </ButtonContainer>
                 )}
@@ -163,6 +165,7 @@ const DoctorDashboardScreen: React.FC = () => {
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.logoutButton}
+          titleStyle={styles.buttonText as TextStyle}
         />
       </ScrollView>
     </Container>
@@ -201,16 +204,24 @@ const styles = {
     fontSize: 16,
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: theme.typography.body.fontFamily,
   },
   patientName: {
     fontSize: 16,
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: theme.typography.body.fontFamily,
   },
   specialty: {
     fontSize: 14,
     fontWeight: '500',
     color: theme.colors.text,
+    fontFamily: theme.typography.body.fontFamily,
+  },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
   },
 };
 
@@ -220,8 +231,9 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
@@ -237,16 +249,18 @@ const AppointmentCard = styled(ListItem)`
 `;
 
 const LoadingText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
 const EmptyText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
@@ -259,6 +273,7 @@ const StatusBadge = styled.View<StyledProps>`
 `;
 
 const StatusText = styled.Text<StyledProps>`
+  font-family: ${theme.typography.body.fontFamily};
   color: ${(props: StyledProps) => getStatusColor(props.status)};
   font-size: 12px;
   font-weight: 500;
@@ -270,4 +285,4 @@ const ButtonContainer = styled.View`
   margin-top: 8px;
 `;
 
-export default DoctorDashboardScreen; 
+export default DoctorDashboardScreen;

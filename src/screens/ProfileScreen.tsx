@@ -7,7 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import theme from '../styles/theme';
 import Header from '../components/Header';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, TextStyle } from 'react-native';
 
 type ProfileScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
@@ -43,7 +43,7 @@ const ProfileScreen: React.FC = () => {
           <RoleBadge role={user?.role || ''}>
             <RoleText>{getRoleText(user?.role || '')}</RoleText>
           </RoleBadge>
-          
+
           {user?.role === 'doctor' && (
             <SpecialtyText>Especialidade: {user?.specialty}</SpecialtyText>
           )}
@@ -54,6 +54,7 @@ const ProfileScreen: React.FC = () => {
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         <Button
@@ -61,6 +62,7 @@ const ProfileScreen: React.FC = () => {
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.logoutButton}
+          titleStyle={styles.buttonText as TextStyle}
         />
       </ScrollView>
     </Container>
@@ -83,6 +85,11 @@ const styles = {
     backgroundColor: theme.colors.error,
     paddingVertical: 12,
   },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+  },
 };
 
 const Container = styled.View`
@@ -95,8 +102,9 @@ const ScrollView = styled.ScrollView`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
@@ -120,20 +128,23 @@ const Avatar = styled.Image`
 `;
 
 const Name = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
+  font-family: ${theme.typography.subtitle.fontFamily};
+  font-size: ${theme.typography.subtitle.fontSize}px;
+  font-weight: ${theme.typography.subtitle.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 8px;
 `;
 
 const Email = styled.Text`
-  font-size: 16px;
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 8px;
 `;
 
 const RoleBadge = styled.View<{ role: string }>`
-  background-color: ${(props: { role: any; }) => {
+  background-color: ${(props: { role: any }) => {
     switch (props.role) {
       case 'admin':
         return theme.colors.primary + '20';
@@ -149,13 +160,16 @@ const RoleBadge = styled.View<{ role: string }>`
 `;
 
 const RoleText = styled.Text`
+  font-family: ${theme.typography.caption.fontFamily};
+  font-size: ${theme.typography.caption.fontSize}px;
+  font-weight: ${theme.typography.caption.fontWeight};
   color: ${theme.colors.text};
-  font-size: 14px;
-  font-weight: 500;
 `;
 
 const SpecialtyText = styled.Text`
-  font-size: 16px;
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   color: ${theme.colors.text};
   margin-top: 8px;
 `;

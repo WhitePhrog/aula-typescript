@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import { FlatList, RefreshControl, TouchableOpacity, TextStyle } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 import { HeaderContainer, HeaderTitle } from '../components/Header';
@@ -17,24 +17,9 @@ type HomeScreenProps = {
 };
 
 const doctors: Doctor[] = [
-  {
-    id: '1',
-    name: 'Dr. João Silva',
-    specialty: 'Cardiologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/91.jpg',
-  },
-  {
-    id: '2',
-    name: 'Dra. Maria Santos',
-    specialty: 'Dermatologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/97.jpg',
-  },
-  {
-    id: '3',
-    name: 'Dr. Pedro Oliveira',
-    specialty: 'Oftalmologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/79.jpg',
-  },
+  { id: '1', name: 'Dr. João Silva', specialty: 'Cardiologista', image: 'https://mighty.tools/mockmind-api/content/human/91.jpg' },
+  { id: '2', name: 'Dra. Maria Santos', specialty: 'Dermatologista', image: 'https://mighty.tools/mockmind-api/content/human/97.jpg' },
+  { id: '3', name: 'Dr. Pedro Oliveira', specialty: 'Oftalmologista', image: 'https://mighty.tools/mockmind-api/content/human/79.jpg' },
 ];
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
@@ -104,14 +89,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <Content>
         <Button
           title="Agendar Nova Consulta"
-          icon={
-            <FontAwesome
-              name="calendar-plus-o"
-              size={20}
-              color="white"
-              style={{ marginRight: 8 }}
-            />
-          }
+          icon={<FontAwesome name="calendar-plus-o" size={20} color="white" style={{ marginRight: 8 }} />}
           buttonStyle={{
             backgroundColor: theme.colors.primary,
             borderRadius: 8,
@@ -125,12 +103,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           data={appointments}
           keyExtractor={(item: Appointment) => item.id}
           renderItem={renderAppointment}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          ListEmptyComponent={
-            <EmptyText>Nenhuma consulta agendada</EmptyText>
-          }
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          ListEmptyComponent={<EmptyText>Nenhuma consulta agendada</EmptyText>}
         />
       </Content>
     </Container>
@@ -177,36 +151,44 @@ const InfoContainer = styled.View`
 `;
 
 const DoctorName = styled.Text`
+  font-family: ${theme.typography.subtitle.fontFamily};
   font-size: ${theme.typography.subtitle.fontSize}px;
   font-weight: ${theme.typography.subtitle.fontWeight};
   color: ${theme.colors.text};
 `;
 
 const DoctorSpecialty = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
   font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   color: ${theme.colors.text};
   opacity: 0.8;
   margin-bottom: 4px;
 `;
 
 const DateTime = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
   font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   color: ${theme.colors.primary};
   margin-top: 4px;
 `;
 
 const Description = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
   font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   color: ${theme.colors.text};
   opacity: 0.8;
   margin-top: 4px;
 `;
 
 const Status = styled.Text<{ status: string }>`
+  font-family: ${theme.typography.body.fontFamily};
   font-size: ${theme.typography.body.fontSize}px;
+  font-weight: bold;
   color: ${(props: { status: string }) => props.status === 'pending' ? theme.colors.error : theme.colors.success};
   margin-top: 4px;
-  font-weight: bold;
 `;
 
 const ActionButtons = styled.View`
@@ -221,6 +203,9 @@ const ActionButton = styled(TouchableOpacity)`
 `;
 
 const EmptyText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
+  font-weight: ${theme.typography.body.fontWeight};
   text-align: center;
   color: ${theme.colors.text};
   opacity: 0.6;

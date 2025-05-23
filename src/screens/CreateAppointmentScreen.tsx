@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { ScrollView, ViewStyle } from 'react-native';
+import { ScrollView, ViewStyle, TextStyle } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
@@ -35,38 +35,12 @@ interface Doctor {
   image: string;
 }
 
-// Lista de médicos disponíveis
 const availableDoctors: Doctor[] = [
-  {
-    id: '1',
-    name: 'Dr. João Silva',
-    specialty: 'Cardiologia',
-    image: 'https://randomuser.me/api/portraits/men/1.jpg',
-  },
-  {
-    id: '2',
-    name: 'Dra. Maria Santos',
-    specialty: 'Pediatria',
-    image: 'https://randomuser.me/api/portraits/women/1.jpg',
-  },
-  {
-    id: '3',
-    name: 'Dr. Pedro Oliveira',
-    specialty: 'Ortopedia',
-    image: 'https://randomuser.me/api/portraits/men/2.jpg',
-  },
-  {
-    id: '4',
-    name: 'Dra. Ana Costa',
-    specialty: 'Dermatologia',
-    image: 'https://randomuser.me/api/portraits/women/2.jpg',
-  },
-  {
-    id: '5',
-    name: 'Dr. Carlos Mendes',
-    specialty: 'Oftalmologia',
-    image: 'https://randomuser.me/api/portraits/men/3.jpg',
-  },
+  { id: '1', name: 'Dr. João Silva', specialty: 'Cardiologia', image: 'https://randomuser.me/api/portraits/men/1.jpg' },
+  { id: '2', name: 'Dra. Maria Santos', specialty: 'Pediatria', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
+  { id: '3', name: 'Dr. Pedro Oliveira', specialty: 'Ortopedia', image: 'https://randomuser.me/api/portraits/men/2.jpg' },
+  { id: '4', name: 'Dra. Ana Costa', specialty: 'Dermatologia', image: 'https://randomuser.me/api/portraits/women/2.jpg' },
+  { id: '5', name: 'Dr. Carlos Mendes', specialty: 'Oftalmologia', image: 'https://randomuser.me/api/portraits/men/3.jpg' },
 ];
 
 const CreateAppointmentScreen: React.FC = () => {
@@ -88,11 +62,9 @@ const CreateAppointmentScreen: React.FC = () => {
         return;
       }
 
-      // Recupera consultas existentes
       const storedAppointments = await AsyncStorage.getItem('@MedicalApp:appointments');
       const appointments: Appointment[] = storedAppointments ? JSON.parse(storedAppointments) : [];
 
-      // Cria nova consulta
       const newAppointment: Appointment = {
         id: Date.now().toString(),
         patientId: user?.id || '',
@@ -105,10 +77,7 @@ const CreateAppointmentScreen: React.FC = () => {
         status: 'pending',
       };
 
-      // Adiciona nova consulta à lista
       appointments.push(newAppointment);
-
-      // Salva lista atualizada
       await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(appointments));
 
       alert('Consulta agendada com sucesso!');
@@ -131,21 +100,15 @@ const CreateAppointmentScreen: React.FC = () => {
           value={date}
           onChangeText={setDate}
           containerStyle={styles.input}
+          inputStyle={styles.inputText}
           keyboardType="numeric"
         />
 
         <SectionTitle>Selecione um Horário</SectionTitle>
-        <TimeSlotList
-          onSelectTime={setSelectedTime}
-          selectedTime={selectedTime}
-        />
+        <TimeSlotList onSelectTime={setSelectedTime} selectedTime={selectedTime} />
 
         <SectionTitle>Selecione um Médico</SectionTitle>
-        <DoctorList
-          doctors={availableDoctors}
-          onSelectDoctor={setSelectedDoctor}
-          selectedDoctorId={selectedDoctor?.id}
-        />
+        <DoctorList doctors={availableDoctors} onSelectDoctor={setSelectedDoctor} selectedDoctorId={selectedDoctor?.id} />
 
         {error ? <ErrorText>{error}</ErrorText> : null}
 
@@ -155,6 +118,7 @@ const CreateAppointmentScreen: React.FC = () => {
           loading={loading}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         <Button
@@ -162,6 +126,7 @@ const CreateAppointmentScreen: React.FC = () => {
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.cancelButton}
+          titleStyle={styles.buttonText as TextStyle}
         />
       </ScrollView>
     </Container>
@@ -175,6 +140,12 @@ const styles = {
   input: {
     marginBottom: 15,
   },
+  inputText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+    color: theme.colors.text,
+  },
   button: {
     marginTop: 10,
     width: '100%',
@@ -187,6 +158,11 @@ const styles = {
     backgroundColor: theme.colors.secondary,
     paddingVertical: 12,
   },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
+  },
 };
 
 const Container = styled.View`
@@ -195,22 +171,27 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
 `;
 
 const SectionTitle = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
+  font-family: ${theme.typography.subtitle.fontFamily};
+  font-size: ${theme.typography.subtitle.fontSize}px;
+  font-weight: ${theme.typography.subtitle.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 10px;
   margin-top: 10px;
 `;
 
 const ErrorText = styled.Text`
+  font-family: ${theme.typography.caption.fontFamily};
+  font-size: ${theme.typography.caption.fontSize}px;
+  font-weight: ${theme.typography.caption.fontWeight};
   color: ${theme.colors.error};
   text-align: center;
   margin-bottom: 10px;

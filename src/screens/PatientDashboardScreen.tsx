@@ -76,7 +76,6 @@ const PatientDashboardScreen: React.FC = () => {
     }
   };
 
-  // Carrega as consultas quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
       loadAppointments();
@@ -94,6 +93,7 @@ const PatientDashboardScreen: React.FC = () => {
           onPress={() => navigation.navigate('CreateAppointment')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         <Button
@@ -101,6 +101,7 @@ const PatientDashboardScreen: React.FC = () => {
           onPress={() => navigation.navigate('Profile')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonText as TextStyle}
         />
 
         {loading ? (
@@ -138,6 +139,7 @@ const PatientDashboardScreen: React.FC = () => {
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.logoutButton}
+          titleStyle={styles.buttonText as TextStyle}
         />
       </ScrollView>
     </Container>
@@ -164,21 +166,30 @@ const styles = {
     fontSize: 18,
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: theme.typography.body.fontFamily,
   },
   specialty: {
     fontSize: 14,
     color: theme.colors.text,
     marginTop: 4,
+    fontFamily: theme.typography.body.fontFamily,
   },
   dateTime: {
     fontSize: 14,
     color: theme.colors.text,
     marginTop: 4,
+    fontFamily: theme.typography.body.fontFamily,
   },
   patientName: {
     fontSize: 16,
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: theme.typography.body.fontFamily,
+  },
+  buttonText: {
+    fontFamily: theme.typography.body.fontFamily,
+    fontSize: theme.typography.body.fontSize,
+    fontWeight: theme.typography.body.fontWeight as TextStyle['fontWeight'],
   },
 };
 
@@ -188,8 +199,9 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
+  font-family: ${theme.typography.title.fontFamily};
+  font-size: ${theme.typography.title.fontSize}px;
+  font-weight: ${theme.typography.title.fontWeight};
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
@@ -205,16 +217,18 @@ const AppointmentCard = styled(ListItem)`
 `;
 
 const LoadingText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
 const EmptyText = styled.Text`
+  font-family: ${theme.typography.body.fontFamily};
+  font-size: ${theme.typography.body.fontSize}px;
   text-align: center;
   color: ${theme.colors.text};
-  font-size: 16px;
   margin-top: 20px;
 `;
 
@@ -227,9 +241,10 @@ const StatusBadge = styled.View<StyledProps>`
 `;
 
 const StatusText = styled.Text<StyledProps>`
+  font-family: ${theme.typography.body.fontFamily};
   color: ${(props: StyledProps) => getStatusColor(props.status)};
   font-size: 12px;
   font-weight: 500;
 `;
 
-export default PatientDashboardScreen; 
+export default PatientDashboardScreen;
