@@ -51,7 +51,7 @@ npm run android
 
 ### Visual Hierarchy  
 
-The system uses a warm pastel color palette to create a welcoming and comfortable environment.  
+The system uses a warm pastel color palette to create a welcoming and comfortable environment. The idea is also to stand out, to some degree, from the regular pallete found in medical scenarios.  
 Titles are emphasized with larger and bold text to guide users through the content.  
 Primary actions are differentiated through highlighted buttons with distinct colors from the palette.  
 
