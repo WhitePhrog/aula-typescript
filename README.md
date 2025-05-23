@@ -83,7 +83,3 @@ Styled components are created for reusability and consistency across the applica
 - Type-safe styling with TypeScript support.  
 - Dynamic styling capabilities based on component props and state.  
 - Clear separation between component logic and presentation for better code organization.  
-
-## Conclusion  
-
-The combination of deliberate UX/UI decisions and the structured use of `styled-components` results in an accessible, maintainable, and visually cohesive application suitable for medical appointment management.
